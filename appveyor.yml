@@ -12,6 +12,7 @@ environment:
   - MSYS_BITS: 32
     RUST_CONFIGURE_ARGS: --build=i686-pc-windows-msvc --target=i586-pc-windows-msvc
     SCRIPT: python x.py test --host i686-pc-windows-msvc --target i686-pc-windows-msvc
+    APPVEYOR_CACHE_ENTRY_ZIP_ARGS: -t7z -m0=lzma -mx=9
 
   ## MSVC aux tests
   #- MSYS_BITS: 64
