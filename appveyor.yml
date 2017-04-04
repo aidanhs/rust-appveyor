@@ -141,7 +141,7 @@ install:
   - set SCCACHE_ERROR_LOG=%CD%/sccache.log
 
 test_script:
-  - mkdir C:\cache\rustsrc
+  - if not exist C:\cache\rustsrc\NUL mkdir C:\cache\rustsrc
   - sh src/ci/init_repo.sh . /c/cache/rustsrc
   - set SRC=.
   - set NO_CCACHE=1
