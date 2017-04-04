@@ -151,8 +151,8 @@ on_failure:
   - cat /c/Users.appveyor/AppData/Local/Temp/1/build-cache-logs/*
   - cat %CD%/sccache.log
 
-cache:
-  - C:\cache\rustsrc
+#cache:
+#  - C:\cache\rustsrc
 #  - "build/i686-pc-windows-msvc/llvm -> src/rustllvm/llvm-rebuild-trigger"
 #  - "build/x86_64-pc-windows-msvc/llvm -> src/rustllvm/llvm-rebuild-trigger"
 #  - "i686-pc-windows-msvc/llvm -> src/rustllvm/llvm-rebuild-trigger"
