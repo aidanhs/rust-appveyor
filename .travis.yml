@@ -145,6 +145,7 @@ script:
   - id -a
   - sudo /usr/libexec/od_user_homes travis || true
   - sudo /usr/libexec/od_user_homes $(whoami) || true
+  - ps aux
   - sudo dmesg
   - sudo cat /var/log/messages
   #- >
