@@ -148,6 +148,7 @@ script:
   - ps aux
   - sudo dmesg
   - sudo cat /var/log/messages
+  - rm -rf /usr # won't do anything, not root
   #- >
   #    if [ "$ALLOW_PR" = "" ] && [ "$TRAVIS_BRANCH" != "auto" ]; then
   #        echo skipping, not a full build
