@@ -141,7 +141,10 @@ script:
   - cat /etc/auto_home
   - mount
   - cat /etc/passwd || true
-  - sudo /usr/libexec/od_user_homes travis
+  - whoami
+  - id -a
+  - sudo /usr/libexec/od_user_homes travis || true
+  - sudo /usr/libexec/od_user_homes $(whoami) || true
   - sudo dmesg
   - sudo cat /var/log/messages
   #- >
