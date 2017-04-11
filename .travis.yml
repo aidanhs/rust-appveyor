@@ -139,8 +139,11 @@ before_script:
 script:
   - cat /etc/auto_master
   - cat /etc/auto_home
+  - mount
   - cat /etc/passwd || true
   - sudo /usr/libexec/od_user_homes travis
+  - sudo dmesg
+  - sudo cat /var/log/messages
   #- >
   #    if [ "$ALLOW_PR" = "" ] && [ "$TRAVIS_BRANCH" != "auto" ]; then
   #        echo skipping, not a full build
