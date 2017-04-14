@@ -131,10 +131,10 @@ install: >
     export PATH=$PATH:$HOME
 
 before_script:
-  - >
-      echo "#### Disk usage before running script:";
-      df -h;
-      du . | sort -nr | head -n100
+  #- >
+  #    echo "#### Disk usage before running script:";
+  #    df -h;
+  #    du . | sort -nr | head -n100
 
 script:
   #- cat /etc/auto_master
@@ -148,7 +148,9 @@ script:
   #- ps aux
   #- sudo dmesg
   #- sudo cat /var/log/messages
-  - mkdir -p x/a/b/c && touch x/1 x/a/2 x/a/b/3 x/a/b/c/4 && sudo chown -R root: x
+  - mkdir -p x/a/b/c
+  - touch x/1 x/a/2 x/a/b/3 x/a/b/c/4
+  - sudo chown -R root:root x
   - rm -rf x # won't do anything, not root
   #- >
   #    if [ "$ALLOW_PR" = "" ] && [ "$TRAVIS_BRANCH" != "auto" ]; then
@@ -162,56 +164,56 @@ script:
   #        fi
   #    fi
 
-after_success:
-  - >
-      echo "#### Build successful; Disk usage after running script:";
-      df -h;
-      du . | sort -nr | head -n100
-
-after_failure:
-  - >
-      echo "#### Build failed; Disk usage after running script:";
-      df -h;
-      du . | sort -nr | head -n100
-
-  # One of these is the linux sccache log, one is the OSX sccache log. Instead
-  # of worrying about what system we are just cat both. One of these commands
-  # will fail but that's ok, they'll both get executed.
-  - cat obj/tmp/sccache.log
-  - cat /tmp/sccache.log
-
-  # Random attempt at debugging currently. Just poking around in here to see if
-  # anything shows up.
-  - ls $HOME/Library/Logs/DiagnosticReports/
-
-  # attempt to debug anything killed by the oom killer on linux, just to see if
-  # it happened
-  - dmesg | grep -i kill
+#after_success:
+#  - >
+#      echo "#### Build successful; Disk usage after running script:";
+#      df -h;
+#      du . | sort -nr | head -n100
+#
+#after_failure:
+#  - >
+#      echo "#### Build failed; Disk usage after running script:";
+#      df -h;
+#      du . | sort -nr | head -n100
+#
+#  # One of these is the linux sccache log, one is the OSX sccache log. Instead
+#  # of worrying about what system we are just cat both. One of these commands
+#  # will fail but that's ok, they'll both get executed.
+#  - cat obj/tmp/sccache.log
+#  - cat /tmp/sccache.log
+#
+#  # Random attempt at debugging currently. Just poking around in here to see if
+#  # anything shows up.
+#  - ls $HOME/Library/Logs/DiagnosticReports/
+#
+#  # attempt to debug anything killed by the oom killer on linux, just to see if
+#  # it happened
+#  - dmesg | grep -i kill
 
 # Save tagged docker images we created and load them if they're available
 # Travis saves caches whether the build failed or not, nuke rustsrc if
 # the failure was while updating it (as it may be in an bad state)
 # https://github.com/travis-ci/travis-ci/issues/4472
-before_cache:
-  - docker history -q rust-ci |
-    grep -v missing |
-    xargs docker save |
-    gzip > $HOME/docker/rust-ci.tar.gz
-  - if [ ! -f $HOME/rustsrc/cache_valid1 ]; then
-        echo "WARNING rustsrc cache was invalid when saving";
-        rm -rf $HOME/rustsrc && mkdir $HOME/rustsrc;
-    fi
+#before_cache:
+  #- docker history -q rust-ci |
+  #  grep -v missing |
+  #  xargs docker save |
+  #  gzip > $HOME/docker/rust-ci.tar.gz
+  #- if [ ! -f $HOME/rustsrc/cache_valid1 ]; then
+  #      echo "WARNING rustsrc cache was invalid when saving";
+  #      rm -rf $HOME/rustsrc && mkdir $HOME/rustsrc;
+  #  fi
 before_install:
-  - zcat $HOME/docker/rust-ci.tar.gz | docker load || true
-  - mkdir -p $HOME/rustsrc
+  #- zcat $HOME/docker/rust-ci.tar.gz | docker load || true
+  #- mkdir -p $HOME/rustsrc
 
 notifications:
   email: false
 
-cache:
-  directories:
-    - $HOME/docker
-    - $HOME/rustsrc
+#cache:
+#  directories:
+#    - $HOME/docker
+#    - $HOME/rustsrc
 
 before_deploy:
   - mkdir -p deploy/$TRAVIS_COMMIT
