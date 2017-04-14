@@ -151,7 +151,6 @@ script:
   - mkdir -p x/a/
   - touch x/a/1
   - sudo chown -R root x
-  - sudo chmod -r x/a
   - rm -rf x
   #- >
   #    if [ "$ALLOW_PR" = "" ] && [ "$TRAVIS_BRANCH" != "auto" ]; then
