@@ -148,10 +148,11 @@ script:
   #- ps aux
   #- sudo dmesg
   #- sudo cat /var/log/messages
-  - mkdir -p x/a/b/c
-  - touch x/1 x/a/2 x/a/b/3 x/a/b/c/4
+  - mkdir -p x/a/
+  - touch x/a/1
   - sudo chown -R root x
-  - rm -rf x # won't do anything, not root
+  - sudo chmod -r x/a
+  - rm -rf x
   #- >
   #    if [ "$ALLOW_PR" = "" ] && [ "$TRAVIS_BRANCH" != "auto" ]; then
   #        echo skipping, not a full build
