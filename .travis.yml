@@ -12,7 +12,7 @@ matrix:
   fast_finish: true
   include:
     ## Linux builders, all docker images
-    #- env: IMAGE=arm-android
+    - env: IMAGE=arm-android
     #- env: IMAGE=armhf-gnu
     #- env: IMAGE=cross DEPLOY=1
     #- env: IMAGE=dist-android DEPLOY=1
@@ -148,6 +148,9 @@ script:
   #- ps aux
   #- sudo dmesg
   #- sudo cat /var/log/messages
+  - sudo apt-get install cpu-checker && sudo kvm-ok
+  - cat /proc/cpuinfo
+  - egrep -c '(vmx|svm)' /proc/cpuinfo
   - mkdir -p x/a/
   - touch x/a/1
   - sudo chown -R root x
