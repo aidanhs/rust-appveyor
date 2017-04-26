@@ -12,7 +12,7 @@ matrix:
   fast_finish: true
   include:
     ## Linux builders, all docker images
-    - env: IMAGE=arm-android
+    #- env: IMAGE=arm-android
     #- env: IMAGE=armhf-gnu
     #- env: IMAGE=cross DEPLOY=1
     #- env: IMAGE=dist-android DEPLOY=1
@@ -148,13 +148,17 @@ script:
   #- ps aux
   #- sudo dmesg
   #- sudo cat /var/log/messages
-  - sudo apt-get install cpu-checker && sudo kvm-ok
   - cat /proc/cpuinfo
   - egrep -c '(vmx|svm)' /proc/cpuinfo
-  - mkdir -p x/a/
-  - touch x/a/1
-  - sudo chown -R root x
-  - rm -rf x
+  - which make
+  - env
+  - >
+      curl -sSL -O https://s3.amazonaws.com/rust-lang-ci/rust-ci-mirror/openssl-1.0.2k.tar.gz &&
+      tar xf openssl-1.0.2k.tar.gz &&
+      cd openssl-1.0.2k &&
+      sed -i 's/Never mind.*$/\\0\\n\\texit 1/g' crypto/cmac/Makefile &&
+      ./Configure no-dso no-ssl2 no-ssl3 darwin64-x86_64-cc &&
+      make
   #- >
   #    if [ "$ALLOW_PR" = "" ] && [ "$TRAVIS_BRANCH" != "auto" ]; then
   #        echo skipping, not a full build
